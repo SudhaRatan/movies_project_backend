@@ -35,8 +35,7 @@ router
   .get(verifyJWT, async (req, res) => {
     try {
       const result = await Ticket.find({ User: req.userId }).populate('Theatre User Movie')
-      result.auth = true
-      res.json(result)
+      res.json({ auth: true, result })
     } catch (error) {
       console.log(error)
       res.json({ auth: false })
@@ -47,7 +46,6 @@ router
 router
   .route('/dashboard')
   .get(verifyJWT, async (req, res) => {
-    console.log(req.userId)
     if (req.userId === 1234) {
       try {
         const movies = await Movie.find()
@@ -117,6 +115,23 @@ router
       res.json({ auth: true, message: "Added theatre" })
     } else {
       res.json({ auth: false, message: "Theatre already exists" })
+    }
+  })
+
+router
+  .route('/addmovie')
+  .post(verifyJWT, async (req, res) => {
+    try {
+      const check = await Movie.findOne({ name: req.body.name })
+      if (check) {
+        res.json({ auth: false, message: "Movie already exists" })
+      }
+      else {
+        await Movie.create(req.body)
+        res.json({ auth: true })
+      }
+    } catch (error) {
+      res.json({ auth: false })
     }
   })
 
