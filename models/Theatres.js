@@ -5,10 +5,6 @@ const TheatreSchema = mongoose.Schema({
     type: String,
     required: true,
   },
-  tickets: {
-    type: Number,
-    required: true
-  }
 })
 
 module.exports = mongoose.model('Theatre',TheatreSchema)

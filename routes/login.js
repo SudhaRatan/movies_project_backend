@@ -70,7 +70,6 @@ router
   .post((req,res) => {
     if(req.body.id === "admin" && req.body.password === "admin"){
       const token = jwt.sign({ id: 1234 }, process.env.ACCESS_TOKEN)
-      console.log(token)
       res.json({
         auth: true,
         token
