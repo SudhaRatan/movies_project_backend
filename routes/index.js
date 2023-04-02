@@ -18,6 +18,12 @@ router
   })
 
 router
+  .route('/init')
+  .get((req, res) => {
+    res.json({auth:true})
+  })
+
+router
   .route('/bookTicket')
   .post(verifyJWT, async (req, res) => {
     req.body.User = req.userId
